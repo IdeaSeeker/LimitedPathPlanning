@@ -1,9 +1,12 @@
+from src import Node
+
+
 class Map:
 
-    def __init__(self):
-        self._width = 0
-        self._height = 0
-        self._cells = []
+    def __init__(self, width = 0, height = 0, grid_cells = []):
+        self._width = width
+        self._height = height
+        self._cells = grid_cells
 
 
     def read_from_string(self, cell_str, width, height):
@@ -23,13 +26,13 @@ class Map:
             for cell in line:
                 self._cells[i][j] = int(cell != '.')  # 0 for free cells
                 j += 1
-            i += 1    
+            i += 1
 
 
-    def set_grid_cells(self, width, height, grid_cells):
-        self._width = width
-        self._height = height
-        self._cells = grid_cells
+    def init_nodes(self):
+        for i in range(self._width):
+            for j in range(self._height):
+                self._cells[i][j] = Node(i, j, g = 10 ** 9)
 
 
     def is_on_grid(self, i, j):
@@ -45,14 +48,14 @@ class Map:
             return []
 
         neighbors = [
-            (i + di, j + dj)
+            self._cells[i + di][j + dj]
             for di, dj in [(0, -1), (-1, 0), (1, 0), (0, 1)]
             if self.is_free(i + di, j + dj)
         ]
 
         if diagonal_allowed:
             neighbors += [
-                (i + di, j + dj)
+                self._cells[i + di][j + dj]
                 for di, dj in [(-1, -1), (-1, 1), (1, -1), (1, 1)]
                 if self.is_free(i + di, j + dj) and self.is_free(i + di, j) and self.is_free(i, j + dj)
             ]
