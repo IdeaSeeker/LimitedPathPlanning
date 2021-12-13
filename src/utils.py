@@ -1,3 +1,14 @@
-def compute_cost(i1, j1, i2, j2):
-    # (i1, j1) -> (i2, j2)
-    return ( abs(i1 - i2) + abs(j1 - j2) ) ** 0.5
+inf = 10
+
+
+def compute_cost(s, t):
+    return ( abs(s.i - t.i) ** 2 + abs(s.j - t.j) ** 2 ) ** 0.5
+
+
+# def heuristic(s, t):
+#     di = abs(s.i - t.i)
+#     dj = abs(s.j - t.j)
+#     return abs(di - dj) + 2 ** 0.5 * min(di, dj)
+
+def heuristic(s, t):
+    return abs(s.i - t.i) + abs(s.j - t.j)
