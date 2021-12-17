@@ -1,4 +1,4 @@
-inf = 10
+inf = 10 ** 9
 
 
 def compute_cost(s, t):
