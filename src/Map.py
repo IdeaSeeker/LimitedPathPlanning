@@ -40,6 +40,7 @@ class Map:
             for i in range(self._width):
                 for j in range(self._height):
                     print(self._cells[i][j], end = ' ')
+                print()
         else:
             print(str(self))
 
@@ -104,10 +105,10 @@ class Map:
         return self.is_on_grid(i, j) and not self._cells[i][j] is None
 
 
-    def get_neighbors(self, node, diagonal_allowed = False):
+    def get_neighbors(self, node, free_required = True, diagonal_allowed = False):
         i, j = node.coordinates()
 
-        if not self.is_free(i, j):
+        if free_required and not self.is_free(i, j):
             return []
 
         neighbors = [
