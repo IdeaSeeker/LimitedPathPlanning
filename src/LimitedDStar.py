@@ -35,6 +35,8 @@ class LimitedDStar:
         self._open = OpenList()
         self._open[self._finish] = self.calculate_key(self._finish)
 
+        self._log_current_map = []
+
 
     def calcutale_rhs(self, s):
         if s == self._finish:
@@ -88,40 +90,32 @@ class LimitedDStar:
 
     def update_map(self):
         is_changed = False
-        for di in [-1, 0, 1]:
-            for dj in [-1, 0, 1]:
-                if di == 0 and dj == 0:
-                    continue
+        for di, dj in [(-1, 0), (0, -1), (1, 0), (0, 1)]:
+            i, j = self._start.i + di, self._start.j + dj
+            if not self._full_map.is_on_grid(i, j):
+                continue
 
-                i, j = self._start.i + di, self._start.j + dj
-                if not self._full_map.is_on_grid(i, j):
-                    continue
+            full_node_obst = self._full_map._cells[i][j] is None
+            current_node_obst = self._current_map._cells[i][j] is None
+            if current_node_obst and not full_node_obst or not current_node_obst and full_node_obst:
+                current_change = Change(0, i, j, full_node_obst)
+                self._current_map.apply_change(current_change)
 
-                full_node_obst = self._full_map._cells[i][j] is None
-                current_node_obst = self._current_map._cells[i][j] is None
-                if current_node_obst and not full_node_obst or not current_node_obst and full_node_obst:
-                    # print(f'path changed: {i, j} now is_obst = {full_node_obst}')
-                    current_change = Change(0, i, j, full_node_obst)
-                    self._current_map.apply_change(current_change)
+                i, j = current_change.coordinates()
+                new_node = self._current_map[Node(i, j)]
+                if not new_node is None:
+                    self.update_vertex(new_node)
+                else:
+                    for adj_ij in self._current_map.get_neighbors(Node(i, j), free_required = False):
+                        self.update_vertex(adj_ij)
 
-                    i, j = current_change.coordinates()
-                    new_node = self._current_map[Node(i, j)]
-                    if not new_node is None:
-                        self.update_vertex(new_node)
-                    else:
-                        for adj_ij in self._current_map.get_neighbors(Node(i, j), free_required = False):
-                            self.update_vertex(adj_ij)
+                for s in self._open._data:
+                    self._open._data[s] = self.calculate_key(s)
 
-                    for s in self._open._data:
-                        self._open._data[s] = self.calculate_key(s)
-
-                    is_changed = True
-
-        if is_changed:
-            self.compute_shortest_path()
+                self.compute_shortest_path()
 
 
-    def run(self):
+    def run(self, map_logging = False):
         current_time = 0
 
         self.update_map()
@@ -145,6 +139,8 @@ class LimitedDStar:
             self._start = best_node
             self._current_map.update_node(self._start)
             self._path.append(self._start)
+            if map_logging:
+                self._log_current_map.append(str(self._current_map))
 
             self.update_map()
             # self.print_path()
