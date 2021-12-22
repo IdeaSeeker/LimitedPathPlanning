@@ -152,21 +152,21 @@ class LimitedDStar:
         return self._path
 
 
-_map = Map()
-_map.read_from_string(7, 7,
-'''
-.......
-.######
-......#
-###.###
-.......
-.######
-.......
-'''
-)
-_start = Node(0, 0)
-_finish = Node(6, 6)
+# _map = Map()
+# _map.read_from_string(7, 7,
+# '''
+# .......
+# .######
+# ......#
+# ###.###
+# .......
+# .######
+# .......
+# '''
+# )
+# _start = Node(0, 0)
+# _finish = Node(6, 6)
 
-d_star = LimitedDStar(_map, _start, _finish)
-d_star.run()
-d_star.print_path()
+# d_star = LimitedDStar(_map, _start, _finish)
+# d_star.run()
+# d_star.print_path()
