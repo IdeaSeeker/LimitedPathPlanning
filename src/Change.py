@@ -6,6 +6,6 @@ class Change:
         self._j = j
         self._is_obst = is_obst
 
-
+    @property
     def coordinates(self):
         return self._i, self._j

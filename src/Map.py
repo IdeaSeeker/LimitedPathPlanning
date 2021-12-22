@@ -84,13 +84,13 @@ class Map:
     def init_nodes(self):
         for i in range(self._height):
             for j in range(self._width):
-                if not self._cells[i][j] is None:
+                if self._cells[i][j] is not None:
                     self._cells[i][j].g   = inf
                     self._cells[i][j].rhs = inf
 
 
     def apply_change(self, change: Change):
-        i, j = change.coordinates()
+        i, j = change.coordinates
         if change._is_obst:
             self._cells[i][j] = None
         else:
@@ -102,7 +102,7 @@ class Map:
 
 
     def is_free(self, i, j):
-        return self.is_on_grid(i, j) and not self._cells[i][j] is None
+        return self.is_on_grid(i, j) and self._cells[i][j] is not None
 
 
     def get_neighbors(self, node, free_required = True, diagonal_allowed = False):
