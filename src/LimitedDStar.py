@@ -71,6 +71,8 @@ class LimitedDStar:
             self._start.rhs != self._start.g
         ):
             u, _ = self._open.pop_min_value()
+            if self._current_map._cells[u.i][u.j] is None:
+                continue
             if u.g >= u.rhs:
                 u.g = u.rhs
                 for s in self._current_map.get_neighbors(u):
@@ -99,8 +101,8 @@ class LimitedDStar:
                 self._current_map.apply_change(current_change)
 
                 i, j = current_change.coordinates
-                new_node = self._current_map[Node(i, j)]
-                if not new_node is None:
+                new_node = self._current_map._cells[i][j]
+                if new_node is not None:
                     self.update_vertex(new_node)
                 else:
                     for adj_ij in self._current_map.get_neighbors(Node(i, j), free_required = False):

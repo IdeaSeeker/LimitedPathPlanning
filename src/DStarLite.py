@@ -74,6 +74,8 @@ class DStarLite:
         ):
             K_old = self._open.get_min_value()
             u, _ = self._open.pop_min_value()
+            if self._current_map._cells[u.i][u.j] is None:
+                continue
             if K_old < self.calculate_key(u):
                 self._open.insert(self.calculate_key(u), u)
             elif u.g >= u.rhs:
