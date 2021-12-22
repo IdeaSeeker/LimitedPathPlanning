@@ -5,6 +5,7 @@ from Change import Change
 from OpenList import OpenList
 from utils import *
 
+
 class LPAStar:
 
     def __init__(self, map: Map, start: Node, finish: Node, changes: List[List[Change]]):
@@ -74,6 +75,7 @@ class LPAStar:
     def print_path(self):
         self._map.print_path(self._path)
 
+
     def greedy_path(self):
         current = self._map[self._finish]
         path = [current]
@@ -81,6 +83,7 @@ class LPAStar:
             current = min(self._map.get_neighbors(current), key=lambda node: node.g)
             path.append(current)
         return list(reversed(path))
+
 
     def run(self):
         self.compute_shortest_path()
@@ -101,6 +104,7 @@ class LPAStar:
 
             self.compute_shortest_path()
             self._map.print_path(self.greedy_path())
+
 
 if __name__ == "__main__":
     _map = Map()

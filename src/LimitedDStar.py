@@ -116,8 +116,6 @@ class LimitedDStar:
         current_time = 0
 
         self.update_map()
-        # self.print_path()
-        # self._current_map.print(True)
         self.compute_shortest_path()
         while self._start != self._finish:
             current_time += 1
@@ -138,10 +136,5 @@ class LimitedDStar:
             self._path.append(self._start)
 
             self.update_map()
-            # self.print_path()
-            # print(self._start)
-            # print(self._open._data)
-            # self._current_map.print(True)
-            # print()
 
         return self._path
