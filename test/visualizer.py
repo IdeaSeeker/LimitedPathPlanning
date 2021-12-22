@@ -68,4 +68,4 @@ def draw_path(full_map: Map, path: list, filename = 'path', log_current_map = No
 
         images.append(im)
 
-    images[0].save('./' + filename + '.gif', save_all=True, append_images=images[1:], optimize=False, duration=200, loop=0)
+    images[0].save(filename, save_all=True, append_images=images[1:], optimize=False, duration=200, loop=0)

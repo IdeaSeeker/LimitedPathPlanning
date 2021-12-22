@@ -16,7 +16,7 @@ def read_map(path):
             )
             for line in lines[4:]
         ])
-        return map_str, width, height
+        return width, height, map_str
 
 
 def read_map_scen(path, n_tasks = None):
