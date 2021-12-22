@@ -21,8 +21,8 @@ class Map:
 
     def __str__(self):
         result = []
-        for i in range(self._width):
-            for j in range(self._height):
+        for i in range(self._height):
+            for j in range(self._width):
                 if self._cells[i][j] is None:
                     result.append('#')
                 else:
@@ -37,8 +37,8 @@ class Map:
 
     def print(self, verbose = False):
         if verbose:
-            for i in range(self._width):
-                for j in range(self._height):
+            for i in range(self._height):
+                for j in range(self._width):
                     print(self._cells[i][j], end = ' ')
                 print()
         else:
@@ -82,8 +82,8 @@ class Map:
 
 
     def init_nodes(self):
-        for i in range(self._width):
-            for j in range(self._height):
+        for i in range(self._height):
+            for j in range(self._width):
                 if not self._cells[i][j] is None:
                     self._cells[i][j].g   = inf
                     self._cells[i][j].rhs = inf

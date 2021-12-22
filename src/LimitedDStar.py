@@ -39,10 +39,14 @@ class LimitedDStar:
     def calcutale_rhs(self, s):
         if s == self._finish:
             return 0
-        rhs = min(
-            adj_node.g + compute_cost(adj_node, s)
-            for adj_node in self._current_map.get_neighbors(s)
-        )
+        neighbors = self._current_map.get_neighbors(s)
+        if len(neighbors) > 0:
+            rhs = min(
+                adj_node.g + compute_cost(adj_node, s)
+                for adj_node in neighbors
+            )
+        else:
+            rhs = inf
         return min(rhs, inf)
 
 
@@ -150,23 +154,3 @@ class LimitedDStar:
             # print()
 
         return self._path
-
-
-# _map = Map()
-# _map.read_from_string(7, 7,
-# '''
-# .......
-# .######
-# ......#
-# ###.###
-# .......
-# .######
-# .......
-# '''
-# )
-# _start = Node(0, 0)
-# _finish = Node(6, 6)
-
-# d_star = LimitedDStar(_map, _start, _finish)
-# d_star.run()
-# d_star.print_path()
