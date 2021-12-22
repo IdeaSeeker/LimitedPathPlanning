@@ -33,7 +33,10 @@ class OpenList:
         return self._data[self.get_min_key()]
 
 
-    def pop(self, key = None):
-        if key is None:
-            key = self.get_min_key()
+    def pop_min_value(self):
+        key = self.get_min_key()
+        return key, self._data.pop(key)
+
+
+    def slow_pop(self, key):
         return key, self._data.pop(key)

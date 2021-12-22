@@ -33,5 +33,5 @@ class Node:
         return hash(self.coordinates())
 
 
-    # def __lt__(self, other):
-    #     return self.F < other.F or (self.F == other.F and self.h < other.h)
+    def __lt__(self, other):
+        return self.g < other.g

@@ -1,8 +1,11 @@
+from PIL import Image, ImageDraw
+
 import config
 config.configure_imports()
 
 from Map import Map
-from PIL import Image, ImageDraw
+from utils import *
+
 
 color_black = (0, 0, 0)
 color_gray = (102, 102, 102)
@@ -20,7 +23,7 @@ def draw_pix(draw, i, j, color, k):
 def calculate_open_obstacles(path: list):
     result = [set()]
     for node in path:
-        for di, dj in [(-1, 0), (0, -1), (1, 0), (0, 1)]:
+        for di, dj in uldr:
             i, j = node.i + di, node.j + dj
             result[-1].add((i, j))
         result.append(result[-1].copy())

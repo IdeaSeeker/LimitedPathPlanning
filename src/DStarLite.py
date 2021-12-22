@@ -5,7 +5,7 @@ from OpenList import OpenList
 from utils import *
 
 
-class LimitedDStar:
+class DStarLite:
 
     def __init__(self, map: Map, start: Node, finish: Node):
         self._full_map = map
@@ -60,7 +60,7 @@ class LimitedDStar:
             s.rhs = self.calcutale_rhs(s)
             self._current_map.update_node(s)
         if s in self._open:
-            self._open.slow_pop(s)
+            self._open.pop(s)
         if s.g != s.rhs:
             self._open[s] = self.calculate_key(s)
 
@@ -70,7 +70,7 @@ class LimitedDStar:
             self._open.get_min_value() < self.calculate_key(self._start) or \
             self._start.rhs != self._start.g
         ):
-            u, _ = self._open.pop_min_value()
+            u, _ = self._open.pop()
             if u.g >= u.rhs:
                 u.g = u.rhs
                 for s in self._current_map.get_neighbors(u):
@@ -107,7 +107,7 @@ class LimitedDStar:
                         self.update_vertex(adj_ij)
 
                 for s in self._open._data:
-                    self._open[s] = self.calculate_key(s)
+                    self._open._data[s] = self.calculate_key(s)
 
                 self.compute_shortest_path()
 

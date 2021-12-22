@@ -113,7 +113,7 @@ class Map:
 
         neighbors = [
             self._cells[i + di][j + dj]
-            for di, dj in [(0, -1), (-1, 0), (1, 0), (0, 1)]
+            for di, dj in uldr
             if self.is_free(i + di, j + dj)
         ]
 
