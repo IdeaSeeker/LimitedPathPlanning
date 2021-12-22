@@ -10,6 +10,9 @@ class QueueElem:
     def __lt__(self, other: "QueueElem"):
         return self.key < other.key
 
+    def __repr__(self) -> str:
+        return f"{self.key} {self.node}"
+
 class OpenList:
     ''' OpenList[node] = calculate_key(node) '''
 

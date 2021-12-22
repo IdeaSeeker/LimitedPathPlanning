@@ -108,7 +108,9 @@ class LimitedDStar:
                     for adj_ij in self._current_map.get_neighbors(Node(i, j), free_required = False):
                         self.update_vertex(adj_ij)
 
-                for s in self._open._data:
+                for s in list(self._open._data.keys()):
+                    if s in self._open:
+                        self._open.remove(s)
                     self._open.insert(self.calculate_key(s), s)
 
                 self.compute_shortest_path()
