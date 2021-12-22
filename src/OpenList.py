@@ -1,42 +1,50 @@
+from typing import List
+from Node import Node
+from heapq import heappush, heappop, heapify
+
+class QueueElem:
+    def __init__(self, key, node: Node) -> None:
+        self.key = key
+        self.node = node
+
+    def __lt__(self, other: "QueueElem"):
+        return self.key < other.key
+
 class OpenList:
     ''' OpenList[node] = calculate_key(node) '''
 
     def __init__(self):
         self._data = {}
+        self.queue: List[QueueElem] = []
 
+    def insert(self, key, node: Node):
+        elem = QueueElem(key, node)
+        heappush(self.queue, elem)
+        self._data[node] = elem
 
-    def __getitem__(self, key):
-        return self._data[key]
-
-
-    def __setitem__(self, key, value):
-        self._data[key] = value
-
+    def remove(self, node: Node):
+        self.queue.remove(self._data[node])
+        heapify(self.queue)
+        self._data.pop(node)
 
     def __contains__(self, key):
         return key in self._data
 
-
     def is_empty(self):
         return len(self._data) == 0
 
-
     def get_min_key(self):
-        result = None
-        for key in self._data:
-            if result is None or self._data[key] < self._data[result]:
-                result = key
-        return result
+        result = heappop(self.queue)
+        self._data.pop(result.node)
 
+        return result.node
 
     def get_min_value(self):
-        return self._data[self.get_min_key()]
+        return self.queue[0].key
 
 
     def pop_min_value(self):
-        key = self.get_min_key()
-        return key, self._data.pop(key)
+        result = heappop(self.queue)
+        self._data.pop(result.node)
 
-
-    def slow_pop(self, key):
-        return key, self._data.pop(key)
+        return result.node, result.key

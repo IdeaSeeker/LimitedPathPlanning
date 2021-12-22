@@ -87,7 +87,7 @@ class LPAStar:
 
     def run(self):
         self.compute_shortest_path()
-        self._map.print_path(self.greedy_path())
+        self.print_path(self.greedy_path())
         for change_set in self._changes:
             for change in change_set:
                 self._map.apply_change(change)

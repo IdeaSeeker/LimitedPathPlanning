@@ -33,7 +33,7 @@ class LimitedDStar:
         self._current_map.update_node(self._finish)
 
         self._open = OpenList()
-        self._open[self._finish] = self.calculate_key(self._finish)
+        self._open.insert(self.calculate_key(self._finish), self._finish)
 
 
     def calcutale_rhs(self, s):
@@ -60,9 +60,9 @@ class LimitedDStar:
             s.rhs = self.calcutale_rhs(s)
             self._current_map.update_node(s)
         if s in self._open:
-            self._open.slow_pop(s)
+            self._open.remove(s)
         if s.g != s.rhs:
-            self._open[s] = self.calculate_key(s)
+            self._open.insert(self.calculate_key(s), s)
 
 
     def compute_shortest_path(self):
@@ -107,7 +107,7 @@ class LimitedDStar:
                         self.update_vertex(adj_ij)
 
                 for s in self._open._data:
-                    self._open[s] = self.calculate_key(s)
+                    self._open.insert(self.calculate_key(s), s)
 
                 self.compute_shortest_path()
 

@@ -6,7 +6,6 @@ from utils import *
 
 
 class DStarLite:
-
     def __init__(self, map: Map, start: Node, finish: Node):
         self._full_map = map
         self._current_map = Map()
@@ -36,7 +35,7 @@ class DStarLite:
         self._current_map.update_node(self._finish)
 
         self._open = OpenList()
-        self._open[self._finish] = self.calculate_key(self._finish)
+        self._open.insert(self.calculate_key(self._finish), self._finish)
 
 
     def calcutale_rhs(self, s):
@@ -63,9 +62,9 @@ class DStarLite:
             s.rhs = self.calcutale_rhs(s)
             self._current_map.update_node(s)
         if s in self._open:
-            self._open.slow_pop(s)
+            self._open.remove(s)
         if s.g != s.rhs:
-            self._open[s] = self.calculate_key(s)
+            self._open.insert(self.calculate_key(s), s)
 
 
     def compute_shortest_path(self):
@@ -76,7 +75,7 @@ class DStarLite:
             K_old = self._open.get_min_value()
             u, _ = self._open.pop_min_value()
             if K_old < self.calculate_key(u):
-                self._open[u] = self.calculate_key(u)
+                self._open.insert(self.calculate_key(u), u)
             elif u.g >= u.rhs:
                 u.g = u.rhs
                 for s in self._current_map.get_neighbors(u):
@@ -89,7 +88,16 @@ class DStarLite:
 
 
     def print_path(self):
-        self._current_map.print_path(self._path)
+        self._current_map.print_path(self.greedy_path())
+
+
+    def greedy_path(self):
+        current = self._full_map[self._start]
+        path = [current]
+        while current != self._finish and current.g < inf:
+            current = min(self._current_map.get_neighbors(current), key=lambda node: node.g)
+            path.append(current)
+        return list(reversed(path))
 
 
     def update_map(self):
@@ -129,6 +137,8 @@ class DStarLite:
 
         self.update_map()
         self.compute_shortest_path()
+        print("mem")
+        self.print_path()
         while self._start != self._finish:
             current_time += 1
 
