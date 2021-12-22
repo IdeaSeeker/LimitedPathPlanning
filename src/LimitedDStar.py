@@ -35,8 +35,6 @@ class LimitedDStar:
         self._open = OpenList()
         self._open[self._finish] = self.calculate_key(self._finish)
 
-        self._log_current_map = []
-
 
     def calcutale_rhs(self, s):
         if s == self._finish:
@@ -114,7 +112,7 @@ class LimitedDStar:
                 self.compute_shortest_path()
 
 
-    def run(self, map_logging = False):
+    def run(self):
         current_time = 0
 
         self.update_map()
@@ -138,8 +136,6 @@ class LimitedDStar:
             self._start = best_node
             self._current_map.update_node(self._start)
             self._path.append(self._start)
-            if map_logging:
-                self._log_current_map.append(str(self._current_map))
 
             self.update_map()
             # self.print_path()
