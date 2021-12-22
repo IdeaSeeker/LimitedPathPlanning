@@ -19,7 +19,10 @@ class DStarLite:
             ])
         )
 
+        self._K_m = 0
+
         self._start = start
+        self._last_start = start
         self._finish = finish
         self._change_index = 0
         self._path = [self._start]
@@ -52,7 +55,7 @@ class DStarLite:
 
     def calculate_key(self, s):
         corrected_g = min(s.g, s.rhs)
-        return ( corrected_g + heuristic(self._start, s), corrected_g )
+        return ( corrected_g + heuristic(self._start, s) + self._K_m, corrected_g )
 
 
     def update_vertex(self, s):
@@ -60,7 +63,7 @@ class DStarLite:
             s.rhs = self.calcutale_rhs(s)
             self._current_map.update_node(s)
         if s in self._open:
-            self._open.pop(s)
+            self._open.slow_pop(s)
         if s.g != s.rhs:
             self._open[s] = self.calculate_key(s)
 
@@ -70,8 +73,11 @@ class DStarLite:
             self._open.get_min_value() < self.calculate_key(self._start) or \
             self._start.rhs != self._start.g
         ):
-            u, _ = self._open.pop()
-            if u.g >= u.rhs:
+            K_old = self._open.get_min_value()
+            u, _ = self._open.pop_min_value()
+            if K_old < self.calculate_key(u):
+                self._open[u] = self.calculate_key(u)
+            elif u.g >= u.rhs:
                 u.g = u.rhs
                 for s in self._current_map.get_neighbors(u):
                     self.update_vertex(s)
@@ -87,6 +93,8 @@ class DStarLite:
 
 
     def update_map(self):
+        first_time = True
+
         for di, dj in uldr:
             i, j = self._start.i + di, self._start.j + dj
             if not self._full_map.is_on_grid(i, j):
@@ -95,6 +103,10 @@ class DStarLite:
             full_node_obst = self._full_map._cells[i][j] is None
             current_node_obst = self._current_map._cells[i][j] is None
             if current_node_obst and not full_node_obst or not current_node_obst and full_node_obst:
+                if first_time:
+                    first_time = False
+                    self._K_m += heuristic(self._last_start, self._start)
+
                 current_change = Change(0, i, j, full_node_obst)
                 self._current_map.apply_change(current_change)
 
@@ -106,8 +118,8 @@ class DStarLite:
                     for adj_ij in self._current_map.get_neighbors(Node(i, j), free_required = False):
                         self.update_vertex(adj_ij)
 
-                for s in self._open._data:
-                    self._open._data[s] = self.calculate_key(s)
+                # for s in self._open._data:
+                #     self._open._data[s] = self.calculate_key(s)
 
                 self.compute_shortest_path()
 
@@ -131,6 +143,7 @@ class DStarLite:
                     best_cost = next_cost
                     best_node = next_node
 
+            self._last_start = self._start
             self._start = best_node
             self._current_map.update_node(self._start)
             self._path.append(self._start)
