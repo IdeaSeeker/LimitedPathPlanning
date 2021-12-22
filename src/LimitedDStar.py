@@ -89,7 +89,6 @@ class LimitedDStar:
 
 
     def update_map(self):
-        is_changed = False
         for di, dj in [(-1, 0), (0, -1), (1, 0), (0, 1)]:
             i, j = self._start.i + di, self._start.j + dj
             if not self._full_map.is_on_grid(i, j):
@@ -101,7 +100,7 @@ class LimitedDStar:
                 current_change = Change(0, i, j, full_node_obst)
                 self._current_map.apply_change(current_change)
 
-                i, j = current_change.coordinates()
+                i, j = current_change.coordinates
                 new_node = self._current_map[Node(i, j)]
                 if not new_node is None:
                     self.update_vertex(new_node)
