@@ -69,7 +69,11 @@ Examples could also be found in **output** folder.
 
 ## D* Lite running example
 
-<img src="/output/1.gif"/>
+<img src="/output/dstarlite.gif"/>
+
+## LPA* running example
+
+<img src="/output/lpastar.gif"/>
 
 ## References
 
@@ -88,3 +92,7 @@ Yakovlev Konstantin Sergeevich
 Kharlapenko Dmitrii
 
 Stroganov Nikita
+
+## Large D* Lite running example
+
+<img src="/output/paris.gif"/>
