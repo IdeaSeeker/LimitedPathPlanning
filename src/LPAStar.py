@@ -18,7 +18,7 @@ class LPAStar:
         self._map.init_nodes()
 
         self._finish.g = self._finish.rhs = inf
-        self._map.update_node(self._start)
+        self._map.update_node(self._finish)
 
         self._start.g = self._start.rhs = 0
         self._map.update_node(self._start)
@@ -45,7 +45,7 @@ class LPAStar:
 
     def calculate_key(self, s):
         corrected_g = min(s.g, s.rhs)
-        return ( corrected_g + heuristic(self._finish, s), corrected_g )
+        return corrected_g + heuristic(self._finish, s), corrected_g
 
 
     def update_vertex(self, s):
@@ -104,10 +104,4 @@ class LPAStar:
                 for adj_ij in self._map.get_neighbors(Node(i, j), free_required = False):
                     self.update_vertex(adj_ij)
 
-            for s in list(self._open._data.keys()):
-                if s in self._open:
-                    self._open.remove(s)
-                self._open.insert(self.calculate_key(s), s)
-
-        visited = self.compute_shortest_path()
-        return visited
+        return self.compute_shortest_path()

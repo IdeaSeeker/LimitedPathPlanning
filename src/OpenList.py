@@ -2,6 +2,7 @@ from typing import List
 from Node import Node
 from heapq import heappush, heappop, heapify
 
+
 class QueueElem:
     def __init__(self, key, node: Node) -> None:
         self.key = key

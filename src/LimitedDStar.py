@@ -6,8 +6,7 @@ from utils import *
 
 
 class LimitedDStar:
-
-    def __init__(self, map: Map, start: Node, finish: Node):
+    def __init__(self, map: Map, start: Node, finish: Node, vision_distance=1):
         self._full_map = map
         self._current_map = Map()
         self._current_map.read_from_string(
@@ -34,6 +33,8 @@ class LimitedDStar:
 
         self._open = OpenList()
         self._open.insert(self.calculate_key(self._finish), self._finish)
+
+        self.vision_distance = vision_distance
 
 
     def calcutale_rhs(self, s):
@@ -89,31 +90,34 @@ class LimitedDStar:
 
 
     def update_map(self):
-        for di, dj in uldr:
-            i, j = self._start.i + di, self._start.j + dj
-            if not self._full_map.is_on_grid(i, j):
-                continue
+        for di in range(-self.vision_distance, self.vision_distance + 1):
+            for dj in range(-self.vision_distance, self.vision_distance + 1):
+                if di == dj and di == 0:
+                    continue
+                i, j = self._start.i + di, self._start.j + dj
+                if not self._full_map.is_on_grid(i, j):
+                    continue
 
-            full_node_obst = self._full_map._cells[i][j] is None
-            current_node_obst = self._current_map._cells[i][j] is None
-            if current_node_obst and not full_node_obst or not current_node_obst and full_node_obst:
-                current_change = Change(0, i, j, full_node_obst)
-                self._current_map.apply_change(current_change)
+                full_node_obst = self._full_map._cells[i][j] is None
+                current_node_obst = self._current_map._cells[i][j] is None
+                if current_node_obst and not full_node_obst or not current_node_obst and full_node_obst:
+                    current_change = Change(0, i, j, full_node_obst)
+                    self._current_map.apply_change(current_change)
 
-                i, j = current_change.coordinates
-                new_node = self._current_map._cells[i][j]
-                if new_node is not None:
-                    self.update_vertex(new_node)
-                else:
-                    for adj_ij in self._current_map.get_neighbors(Node(i, j), free_required = False):
-                        self.update_vertex(adj_ij)
+                    i, j = current_change.coordinates
+                    new_node = self._current_map._cells[i][j]
+                    if new_node is not None:
+                        self.update_vertex(new_node)
+                    else:
+                        for adj_ij in self._current_map.get_neighbors(Node(i, j), free_required = False):
+                            self.update_vertex(adj_ij)
 
-                for s in list(self._open._data.keys()):
-                    if s in self._open:
-                        self._open.remove(s)
-                    self._open.insert(self.calculate_key(s), s)
+                    for s in list(self._open._data.keys()):
+                        if s in self._open:
+                            self._open.remove(s)
+                        self._open.insert(self.calculate_key(s), s)
 
-                self.compute_shortest_path()
+                    self.compute_shortest_path()
 
 
     def run(self):
@@ -123,7 +127,7 @@ class LimitedDStar:
         self.compute_shortest_path()
         while self._start != self._finish:
             current_time += 1
-
+            print(len(self._path))
             if self._start.g == inf:
                 print('No available path yet')
                 continue
