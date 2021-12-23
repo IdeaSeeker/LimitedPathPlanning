@@ -9,3 +9,11 @@ class Change:
     @property
     def coordinates(self):
         return self._i, self._j
+
+    
+    def __str__(self):
+        return f'Change({self._i}, {self._j}, is_obst: {self._is_obst})'
+
+
+    def __repr__(self):
+        return str(self)
