@@ -59,13 +59,13 @@ class LPAStar:
 
 
     def compute_shortest_path(self):
-        visited = []
+        visited = set()
         while not self._open.is_empty() and (
             self._open.get_min_value() < self.calculate_key(self._finish) or \
             self._finish.rhs != self._finish.g
         ):
             u, _ = self._open.pop_min_value()
-            visited.append(u)
+            visited.add(u)
             if u.g > u.rhs:
                 u.g = u.rhs
                 for s in self._map.get_neighbors(u):
