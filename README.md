@@ -69,7 +69,7 @@ Examples could also be found in **output** folder.
 
 ## D* Lite running example
 
-<img src="/output/0.gif"/>
+<img src="/output/1.gif"/>
 
 ## References
 
