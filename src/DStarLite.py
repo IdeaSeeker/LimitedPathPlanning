@@ -27,6 +27,7 @@ class DStarLite:
         self._finish = finish
         self._change_index = 0
         self._path = [self._start]
+        self._paths = []
 
         self._current_map.init_nodes()
 
@@ -91,6 +92,7 @@ class DStarLite:
                 for s in self._current_map.get_neighbors(u) + [u]:
                     self.update_vertex(s)
             self._current_map.update_node(u)
+        self._paths.append(self.greedy_path())
 
 
     def print_path(self):
@@ -123,6 +125,7 @@ class DStarLite:
                     if first_time:
                         first_time = False
                         self._K_m += heuristic(self._last_start, self._start)
+                        self._last_start = self._start
 
                     current_change = Change(0, i, j, full_node_obst)
                     self._current_map.apply_change(current_change)
@@ -148,7 +151,6 @@ class DStarLite:
         self.compute_shortest_path()
         while self._start != self._finish:
             current_time += 1
-            print(len(self._path), self._K_m)
             if self._start.g == inf:
                 print('No available path yet')
                 continue
@@ -160,7 +162,6 @@ class DStarLite:
                     best_cost = next_cost
                     best_node = next_node
 
-            self._last_start = self._start
             self._start = best_node
             self._current_map.update_node(self._start)
             self._path.append(self._start)
