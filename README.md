@@ -5,6 +5,8 @@
 A software project for Heuristic algorithms course at the SPbU.
 LPA* and D* Lite algorithms for path planning in a limted observable environment. 
 
+<img src="/output/dstarlite.gif"/>
+
 ## Installation
 
 Clone repository:
@@ -68,9 +70,6 @@ Out program ouputs gifs with task. **output_path** argument points to their loca
 Examples could also be found in **output** folder.
 
 ## D* Lite running examples
-
-- map **/data/lak105d.map**
-<img src="/output/dstarlite.gif"/>
 
  - map **/data/den312d.map** with `vision_radius = 1`
 <img src="/output/d_star_lite_vision_1.gif"/>
