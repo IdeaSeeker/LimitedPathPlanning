@@ -10,14 +10,7 @@ from data_parser import *
 from visualizer import *
 from random import randint as rand
 
-def run_on(map_filename, start, finish, pixel_size = 20, gif_speed = 200):
-    d_star = DStarLite(_map, start, finish, 1)
-    d_star.run()
-
-    gif_filename = f'd_star_{start.i}_{start.j}_{finish.i}_{finish.j}.gif'
-    draw_path(_map, d_star._path, gif_filename, pixel_size, gif_speed, 1)
-
-    return Img(filename=gif_filename)
+from pathlib import Path
 
 def run_dstarlite(map_filename: str, start: Node, finish: Node, gif_filename: str, pixel_size: int, gif_speed: int):
     _map = Map()
@@ -67,15 +60,17 @@ runners = {
     "dstarlite": run_dstarlite
 }
 
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("algorithm", type=str, help="algorithm to be used",choices=["dstarlite", "lpastar"])
     parser.add_argument("map_path", type=str, help="path to the .map file. scenario file .map.scen should be nearby")
-    parser.add_argument("output_path", type=str, help="path to resulting gif")
+    parser.add_argument("output_path", type=str, help="path to resulting gif folder")
     parser.add_argument("--vision_distance", type=int, help="dstarlite vision distance", default=1)
-    parser.add_argument("--n_tasks", type=int, default=2)
-    parser.add_argument("--pixel_size", type=int, default=20)
-    parser.add_argument("--gif_speed", type=int, default=100)
+    parser.add_argument("--n_tasks", type=int, default=2, help="number of scenarios to run")
+    parser.add_argument("--pixel_size", type=int, default=20, help="output gif pixel size")
+    parser.add_argument("--gif_speed", type=int, default=100, help="milliseconds between gif frames")
 
     args = parser.parse_args()
 
@@ -85,7 +80,8 @@ if __name__ == "__main__":
     for task_number, (start_i, start_j, goal_i, goal_j, _) in enumerate(tasks):
         start = Node(start_i, start_j)
         finish = Node(goal_i, goal_j)
-        gif_filename = f'{task_number}_' + args.output_path
+        gif_filename = Path(args.output_path) / f"{task_number}.gif"
+        gif_filename.parent.mkdir(exist_ok=True)
 
         runners[args.algorithm](args.map_path, start, finish, gif_filename, args.pixel_size, args.gif_speed)
     
