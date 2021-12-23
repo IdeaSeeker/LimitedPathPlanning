@@ -111,4 +111,4 @@ Stroganov Nikita
 
 ## Large D* Lite running example with increased visibility radius
 
-<img src="/output/paris_vision_10.gif"/>
+<img src="/output/paris_vision_10.gif" width="700"/>
