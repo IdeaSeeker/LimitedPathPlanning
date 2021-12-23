@@ -3,7 +3,7 @@
 ## Description
 
 A software project for Heuristic algorithms course at the SPbU.
-Pathfinding algorithms.
+LPA* and D* Lite algorithms for path planning in a limted observable environment. 
 
 ## Installation
 
