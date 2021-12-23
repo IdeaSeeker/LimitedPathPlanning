@@ -3,7 +3,6 @@ from Change import Change
 from DStarLite import DStarLite
 from LPAStar import LPAStar
 from Map import Map
-from IPython.display import Image as Img
 from Node import Node
 from utils import *
 from data_parser import *

@@ -3,7 +3,7 @@
 ## Description
 
 A software project for Heuristic algorithms course at the SPbU.
-Pathfinding algorithms.
+LPA* and D* Lite algorithms for path planning in a limted observable environment. 
 
 ## Installation
 
@@ -69,7 +69,11 @@ Examples could also be found in **output** folder.
 
 ## D* Lite running example
 
-<img src="/output/1.gif"/>
+<img src="/output/dstarlite.gif"/>
+
+## LPA* running example
+
+<img src="/output/lpastar.gif"/>
 
 ## References
 
@@ -88,3 +92,7 @@ Yakovlev Konstantin Sergeevich
 Kharlapenko Dmitrii
 
 Stroganov Nikita
+
+## Large D* Lite running example
+
+<img src="/output/paris.gif"/>
