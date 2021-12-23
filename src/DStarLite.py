@@ -142,6 +142,10 @@ class DStarLite:
         self.compute_shortest_path()
 
 
+    def collect_open_stats(self):
+        return self._open.add_count, self._open.get_count, self._open.pop_count
+
+
     def run(self):
         current_time = 0
 
