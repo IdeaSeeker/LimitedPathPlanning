@@ -20,17 +20,20 @@ def draw_pix(draw, i, j, color, k):
     draw.rectangle((j * k, i * k, (j + 1) * k - 1, (i + 1) * k - 1), fill=color)
 
 
-def calculate_open_obstacles(path: list):
+def calculate_open_obstacles(path: list, vision_distance: int):
     result = [set()]
     for node in path:
-        for di, dj in uldr:
-            i, j = node.i + di, node.j + dj
-            result[-1].add((i, j))
+        for di in range(-vision_distance, vision_distance + 1):
+            for dj in range(-vision_distance, vision_distance + 1):
+                if di == dj and di == 0:
+                    continue
+                i, j = node.i + di, node.j + dj
+                result[-1].add((i, j))
         result.append(result[-1].copy())
     return result
 
 
-def draw_path(full_map: Map, path: list, filename = 'path', k = 20, gif_speed = 200):
+def draw_path(full_map: Map, path: list, filename = 'path', k = 20, gif_speed = 200, vision_distance = 1):
     if len(path) == 0:
         print('empty path!')
         return
@@ -45,7 +48,7 @@ def draw_path(full_map: Map, path: list, filename = 'path', k = 20, gif_speed = 
     map_str[finish.i][finish.j] = 'F'
 
     last_node = None
-    log_obstacles = calculate_open_obstacles(path)
+    log_obstacles = calculate_open_obstacles(path, vision_distance)
 
     for index, node in enumerate(path + [None]):
         im = Image.new('RGB', (wIm, hIm), color='green')
