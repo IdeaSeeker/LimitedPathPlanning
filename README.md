@@ -2,7 +2,7 @@
 
 ## Description
 
-A software project for Heuristic algorithms course at the SPbU. 
+A software project for Heuristic algorithms course at the SPbU.
 Pathfinding algorithms.
 
 ## Installation
@@ -20,3 +20,71 @@ cd LimitedPathPlanning
 pip install -r requirements.txt
 ```
 
+## Usage
+
+### Example
+
+```bash
+python src/main.py dstarlite data/lak105d.map output --gif_speed 150
+```
+
+Your resulting gifs would be in the repository root.
+
+### Arguments description
+
+```bash
+python src/main.py -h
+
+usage: main.py [-h] [--vision_distance VISION_DISTANCE] [--n_tasks N_TASKS] [--pixel_size PIXEL_SIZE] [--gif_speed GIF_SPEED] {dstarlite,lpastar} map_path output_path
+
+positional arguments:
+  {dstarlite,lpastar}   algorithm to be used
+  map_path              path to the .map file. scenario file .map.scen should be nearby
+  output_path           path to resulting gif folder
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --vision_distance VISION_DISTANCE
+                        dstarlite vision distance
+  --n_tasks N_TASKS     number of scenarios to run
+  --pixel_size PIXEL_SIZE
+                        output gif pixel size
+  --gif_speed GIF_SPEED
+                        milliseconds between gif frames
+```
+
+## Input
+
+Our program uses maps and tasks in the MovingAI format.
+
+You can find it [here](https://movingai.com/benchmarks/formats.html).
+
+Examples could be found in **data** folder.
+
+## Output
+
+Out program ouputs gifs with task. **output_path** argument points to their location.
+
+Examples could also be found in **output** folder.
+
+## D* Lite running example
+
+<img src="/output/1.gif"/>
+
+## References
+
++ Koenig, S. Likhachev, M. and Furcy, D. 2004. Lifelong Planning A*. Artificial Intelligence, 155(1-2), pp. 93-146. [URL](https://www.cs.cmu.edu/~maxim/files/aij04.pdf)
+
++ Sven Koenig and Maxim Likhachev. 2002. D*lite. In Eighteenth national conference on Artificial intelligence (AAAI 2002). 476–483. [URL](http://idm-lab.org/bib/abstracts/papers/aaai02b.pdf)
+
+## Participants
+
+### Mentor
+
+Yakovlev Konstantin Sergeevich
+
+### Students
+
+Kharlapenko Dmitrii
+
+Stroganov Nikita
