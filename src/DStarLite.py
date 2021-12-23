@@ -5,8 +5,6 @@ from OpenList import OpenList
 from utils import *
 
 
-import os
-
 class DStarLite:
     def __init__(self, map: Map, start: Node, finish: Node, vision_distance=1):
         self._full_map = map
