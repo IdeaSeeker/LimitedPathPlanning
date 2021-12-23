@@ -67,11 +67,27 @@ Out program ouputs gifs with task. **output_path** argument points to their loca
 
 Examples could also be found in **output** folder.
 
-## D* Lite running example
+## D* Lite running examples
 
+- map **/data/lak105d.map**
 <img src="/output/dstarlite.gif"/>
 
+ - map **/data/den312d.map** with `vision_radius = 1`
+<img src="/output/d_star_lite_vision_1.gif"/>
+
+- map **/data/den312d.map** with `vision radius = 5`
+<img src="/output/d_star_lite_vision_5.gif"/>
+
+
 ## LPA* running example
+
+- map **/data/lak105d.map**
+
+- legend:
+  - start - red point
+  - finish - green point
+  - appearing obstacles - black points
+  - reopened cells - gray points
 
 <img src="/output/lpastar.gif"/>
 
