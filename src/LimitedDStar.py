@@ -127,7 +127,6 @@ class LimitedDStar:
         self.compute_shortest_path()
         while self._start != self._finish:
             current_time += 1
-            print(len(self._path))
             if self._start.g == inf:
                 print('No available path yet')
                 continue
