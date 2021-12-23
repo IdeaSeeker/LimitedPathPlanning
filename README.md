@@ -93,6 +93,6 @@ Kharlapenko Dmitrii
 
 Stroganov Nikita
 
-## Large D* Lite running example
+## Large D* Lite running example with increased visibility radius
 
-<img src="/output/paris.gif"/>
+<img src="/output/paris_vision_10.gif"/>
