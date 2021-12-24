@@ -77,8 +77,8 @@ if __name__ == "__main__":
     images = []
 
     for task_number, (start_i, start_j, goal_i, goal_j, _) in enumerate(tasks):
-        start = Node(start_i, start_j)
-        finish = Node(goal_i, goal_j)
+        start = Node(start_j, start_i)
+        finish = Node(goal_j, goal_i)
         gif_filename = Path(args.output_path) / f"{task_number}.gif"
         gif_filename.parent.mkdir(exist_ok=True)
 
