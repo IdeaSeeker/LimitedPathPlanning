@@ -1,9 +1,9 @@
-# Path planning in a limited observable environment algorithms (LPA*, D* Lite)
+# Path planning in a partially observable environment algorithms (LPA*, D* Lite)
 
 ## Description
 
 A software project for Heuristic algorithms course at the SPbU.
-LPA* and D* Lite algorithms for path planning in a limted observable environment. 
+LPA* and D* Lite algorithms for path planning in a partially observable environment. 
 
 <img src="/output/dstarlite.gif"/>
 
